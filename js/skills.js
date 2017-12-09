@@ -39,10 +39,11 @@ class Blueball extends Phaser.Sprite {
         this.animations.add('default',this.vetorDefault,this.speed,true);  
         this.animations.play('default');
         this.moveSpeed = 18000;
-        this.moveRange=10000;
+        this.moveRange=20000;
         this.enemy1=enemy1;
         this.enemy2=enemy2;
         this.enemy3=enemy3;
+        this.creationTime = this.game.time.now;
         this.anchor.setTo(0, 0);       
         this.game.physics.arcade.enable(this);
         this.body.moveTo(this.moveSpeed,this.moveRange,Phaser.ANGLE_RIGHT);
@@ -60,6 +61,9 @@ class Blueball extends Phaser.Sprite {
         }        
         if(this.enemy3!=null&&this.game!=null){
             this.game.physics.arcade.collide(this, this.enemy3,this.enemy3.destroyItself);
+        }
+        if(this.game.time.now-this.creationTime>3000){
+            this.destroy();
         }
     }
 }

@@ -25,7 +25,7 @@ class Player extends Phaser.Sprite {
     }
 
     update() {
-        if (this.game.input.mousePointer.isDown){
+        if (this.game.input.activePointer.isDown){
             if(this.game.input.activePointer.worldX>=this.game.width*0.8&&this.game.input.activePointer.worldY>this.game.height*0.8){
                return null; 
             }
