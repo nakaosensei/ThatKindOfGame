@@ -18,12 +18,11 @@ class Fase1 extends GameState {
     create() {
         this.game.world.setBounds(0, 0, 128*32, this.game.height);
         this.game.renderer.roundPixels = true;
-
         this.game.renderer.roundPixels = true;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.gameSound = this.game.add.audio('fable');
         this.gameSound.play();
-        this.game.camera.speedX = 4;
+        this.game.camera.speedX = 2;
 
         
         this.gameSound.loopFull(2.5);        
@@ -35,7 +34,7 @@ class Fase1 extends GameState {
 
         // players
         this.player1 = new Player(this.game, this.game.width*1/5, this.game.height/2, 'player',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],10)
-        this.player1.fixedToCamera = true;
+        //this.player1.fixedToCamera = true;
         this.game.add.existing(this.player1);
 
         let fireButton = this.input.keyboard.addKey(Phaser.Keyboard.TWO);
@@ -127,8 +126,11 @@ class Fase1 extends GameState {
             this.touch.play();
         }        
         this.game.camera.x += this.game.camera.speedX
-        if (this.game.camera.x <= 0 || this.game.camera.x >= this.game.world.width - this.game.width) {
-            this.game.camera.speedX *= -1
+        
+        if (this.game.camera.x >= this.game.world.width - this.game.width) {
+            //this.game.camera.speedX *= -1
+        }else{
+            this.player1.x+= this.game.camera.speedX    
         }
     }
 
