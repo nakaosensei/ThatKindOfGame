@@ -27,7 +27,7 @@ class Game extends Phaser.Game {
 class GameState extends Phaser.State {
     initFullScreenButtons() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.load.audio('fable', ['assets/audio/Fable.mp3', 'assets/audio/Fable.ogg']);
+        
         let fullScreenButton = this.input.keyboard.addKey(Phaser.Keyboard.ONE);
         fullScreenButton.onDown.add(this.toggleFullScreen, this)    
 

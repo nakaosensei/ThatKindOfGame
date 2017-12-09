@@ -9,7 +9,7 @@ class Phoenix extends Phaser.Sprite {
         this.animations.play('default');
         this.player = player;      
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
-        this.body.moveTo(10000,2000,Phaser.ANGLE_LEFT);     
+        //this.body.moveTo(10000,2000,Phaser.ANGLE_LEFT);     
     }
 
     update() {

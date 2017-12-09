@@ -9,21 +9,24 @@ class Fase1 extends GameState {
         this.game.load.image('buttonFire','assets/FireButton190.png',90,90);
         this.game.load.audio('fable', ['assets/audio/Fable.mp3']);        
         this.game.load.audio('blueFlameSound', ['assets/audio/blueBlast.wav']);
+        this.game.load.audio('crow', ['assets/audio/crow.wav']);
         this.game.load.spritesheet('life','assets/lightHalf.png',298,74);
         this.game.load.spritesheet('phoenix','assets/phoenix1.5.png',144,144);
+        this.game.load.spritesheet('story','assets/story1.png',186,533);
         this.game.load.spritesheet('owl','assets/mysticCrow075.png',193,150);
         this.game.load.audio('tamb', ['assets/audio/drum.wav']);   
     }
 
     create() {
-        this.game.world.setBounds(0, 0, 128*32, this.game.height);
+        this.game.world.setBounds(0, 0, 385*32, this.game.height);
         this.game.renderer.roundPixels = true;
         this.game.renderer.roundPixels = true;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.gameSound = this.game.add.audio('fable');
         this.gameSound.play();
+        this.crowSound = this.game.add.audio('crow');
         this.game.camera.speedX = 2;
-
+		this.gameStart=0
         
         this.gameSound.loopFull(2.5);        
         let background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'background')
@@ -41,7 +44,8 @@ class Fase1 extends GameState {
         fireButton.onDown.add(this.doFireButtonAction, this);    
 
         this.createMap();
-
+        this.storyPic = this.game.add.sprite(this.game.width-this.game.width/2+30, this.game.height-this.game.height/2, 'story');
+        this.storyPic.anchor.setTo(0.5, 0.5);
         // full screen touch button
         let fireIcon = this.game.add.sprite(this.game.width-10, this.game.height-10,'buttonFire');
         fireIcon.anchor.setTo(1, 1);
@@ -49,8 +53,20 @@ class Fase1 extends GameState {
         fireIcon.inputEnabled = true;
         fireIcon.fixedToCamera = true;
         fireIcon.events.onInputDown.add(this.doFireButtonAction, this);
-        this.createTimeEvents();
+        //this.createTimeEvents();
         super.initFullScreenButtons();
+        //this.createPhoenixMiddle();
+        //this.createPhoenixTop();
+        //this.createPhoenixBottom();
+        
+        this.game.time.events.add(Phaser.Timer.SECOND*2, this.fadePictureStory , this);
+    }
+
+
+    fadePictureStory(){
+    	console.log("HELLO")
+    	this.gameStart=1
+    	this.game.add.tween(this.storyPic).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
     }
 
     createTimeEvents(){
@@ -81,57 +97,62 @@ class Fase1 extends GameState {
     }
 
     createMap() {
-        let mapData = [ "  X                     X                   X             X                        X                   X             X          ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                ",
-                        "                                                                                                                                "]
+        let mapData = [ "                                            XXXXX         XXXXXXXXXXXXXXXXXXXX                   XXXXXXX                                                                    XXXXX         XXXXXXXXXXXXXXXXXXXX                   XXXXXXX                                                                    XXXXX         XXXXXXXXXXXXXXXXXXXX                                                  ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                                "]
                         
         this.map = this.game.add.group()
         for (let row = 0; row < mapData.length; row++) {
             for (let col = 0; col < mapData[0].length; col++) {
                 if (mapData[row][col] == 'X') {
+                	var spike = new Spike(this.game, col*32,row*32+20,this.player1);
+                	/*
                     let block = this.map.create(col*32, row*32, 'spike')
                     block.scale.setTo(0.5, 0.5)
-                    this.game.physics.arcade.enable(block)
+                    this.game.physics.arcade.enable(block, Phaser.Physics.ARCADE)
                     block.body.immovable = true
                     block.tag = 'spike'
                     block.autoCull = true
                     block.scale.setTo(1.3, 1.3)
                     block.inputEnabled = true
-                    block.input.enableDrag(false, true)        
+                    block.input.enableDrag(true, false)*/
+
                 }
             }
         }
     }
 
     update() { 
-        if(this.player1.lifeTotal<=0){
-            this.state.start('GameOver')
-            this.gameSound.stop();        
-            this.touch.play();
-        }        
-        this.game.camera.x += this.game.camera.speedX
-        
-        if (this.game.camera.x >= this.game.world.width - this.game.width) {
-            //this.game.camera.speedX *= -1
-        }else{
-            this.player1.x+= this.game.camera.speedX    
-        }
+    	if(this.gameStart==1){
+    		if(this.player1.lifeTotal<=0){
+	        	this.game.camera.x = 0
+	            this.state.start('GameOver')
+	            this.gameSound.stop();        
+	            this.touch.play();
+	        }        
+	        this.game.camera.x += this.game.camera.speedX	        
+	        if (this.game.camera.x >= this.game.world.width - this.game.width) {
+	            //this.game.camera.speedX *= -1
+	        }else{
+	            this.player1.x+= this.game.camera.speedX    
+	        }
+    	}        
     }
 
     render() {

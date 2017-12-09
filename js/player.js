@@ -11,14 +11,17 @@ class Player extends Phaser.Sprite {
         this.animations.play('default');      
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
         this.lifeTotal=4;
-        this.hit = -1;
+        this.hit = 0;
+        this.game=game;
         this.lastActionTime=0;
         this.lifeSprite=this.game.add.sprite(10,10,'life');
         this.lifeSprite.animations.add("4Life",[0],1,true);
         this.lifeSprite.animations.add("3Life",[1],1,true);
         this.lifeSprite.animations.add("2Life",[2],1,true);
         this.lifeSprite.animations.add("1Life",[3],1,true);
-        this.lifeSprite.animations.play("4Life");        
+        this.lifeSprite.animations.play("4Life");
+        this.lifeSprite.fixedToCamera = true;
+        this.crowSound = this.game.add.audio('crow');        
     }
 
     update() {
@@ -28,7 +31,6 @@ class Player extends Phaser.Sprite {
             }
             //  400 is the speed it will move towards the mouse
             this.game.physics.arcade.moveToPointer(this, 500);
-            //  if it's overlapping the mouse, don't move any more
             if (Phaser.Rectangle.contains(this.body, this.game.input.x, this.game.input.y)){
                 //this.body.velocity.setTo(0, 0);
             }
@@ -37,14 +39,16 @@ class Player extends Phaser.Sprite {
         }
     }
 
-    takeHit(source,victim){
-        console.log(victim.lifeTotal)
+    takeHit(source,victim){        
         if(victim.hit==0){
-            victim.lastActionTime = victim.game.time.now;        
-        }else{                
-           source.destroy();    
+            victim.lastActionTime = victim.game.time.now;                        
+            console.log(victim.lastActionTime)        
+        }else{               
            if(victim.game.time.now - victim.lastActionTime > 1000){
+              victim.crowSound.play();
               victim.lifeTotal = victim.lifeTotal-1;
+              victim.hit=0;
+              victim.lastActionTime = victim.game.time.now;
               if(victim.lifeTotal==4){
                   victim.lifeSprite.animations.play('4Life');
               }else if(victim.lifeTotal==3){
@@ -55,9 +59,7 @@ class Player extends Phaser.Sprite {
                    victim.lifeSprite.animations.play('1Life');
               }else if(victim.lifeTotal==0){                   
                    victim.destroy();
-
-              }
-              victim.hit=0;
+              }              
            }
         }
     }

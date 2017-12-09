@@ -2,10 +2,10 @@
 class GameOver extends GameState {
     preload() {
         this.game.load.image('background', 'assets/gameOver1.jpg')
-        this.game.load.image('adrian', 'assets/gameOver.png')
+        this.game.load.image('gameOver', 'assets/fimJogo.png')
         this.game.load.image('logo', 'assets/logo.png')
-        this.game.load.image('begin', 'assets/retry.png')
-        this.game.load.audio('darknessBeloved', ['assets/audio/darknessBeloved.mp3']);
+        this.game.load.image('retry', 'assets/retry.png')
+        this.game.load.audio('whiteSpecter', ['assets/audio/whiteSpecter.mp3']);
         this.game.load.audio('tamb', ['assets/audio/drum.wav']);        
     }
 
@@ -13,15 +13,15 @@ class GameOver extends GameState {
         this.game.renderer.roundPixels = true
         //game.renderer.clearBeforeRender = false
         this.game.physics.startSystem(Phaser.Physics.ARCADE)
-        this.gameSound = this.game.add.audio('darknessBeloved');
+        this.gameSound = this.game.add.audio('whiteSpecter');
         this.gameSound.play();
         this.touch = this.game.add.audio('tamb');
         
         let background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'background')
         //background.autoScroll(-30, 0)
-        this.adrian = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'adrian');
-        this.adrian.anchor.setTo(0.5, 0.5);
-        this.game.time.events.add(Phaser.Timer.SECOND*2, this.fadePictureAdrian , this);        
+        this.gameOver = this.game.add.sprite(this.game.width-this.game.width/2, this.game.height-this.game.height/2, 'gameOver');
+        this.gameOver.anchor.setTo(0.5, 0.5);
+        this.game.time.events.add(Phaser.Timer.SECOND*2, this.fadePicturegameOver , this);        
         this.game.time.events.add(Phaser.Timer.SECOND*4, this.showLogo , this);      
     }
 
@@ -31,30 +31,31 @@ class GameOver extends GameState {
     }
 
     showLogo(){
-        this.logoSprite = this.game.add.sprite(this.game.world.centerX-this.game.width*0.05, this.game.world.centerY-60, 'logo');
+        this.logoSprite = this.game.add.sprite(this.game.width-this.game.width/2, this.game.height-this.game.height/2, 'logo');
         this.logoSprite.anchor.setTo(0.5, 0.5);
         this.logoSprite.alpha = 0;
         this.game.add.tween(this.logoSprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
 
-        let beginButton = this.input.keyboard.addKey(Phaser.Keyboard.ONE);
-        beginButton.onDown.add(this.begin, this)
-        let bbIcon = this.game.add.sprite(this.game.width-10, this.game.height-10,'begin')
+        let retryButton = this.input.keyboard.addKey(Phaser.Keyboard.ONE);
+        retryButton.onDown.add(this.retry, this)
+        let bbIcon = this.game.add.sprite(this.game.width-10, this.game.height-10,'retry')
         bbIcon.anchor.setTo(1, 1)
         //fireIcon.scale.setTo(0.75, 0.75)
         bbIcon.inputEnabled = true
-        bbIcon.events.onInputDown.add(this.begin, this)
+        bbIcon.events.onInputDown.add(this.retry, this)
 
     }
 
-    begin(){
+    retry(){
         this.state.start('Menu')
         this.gameSound.stop();        
         this.touch.play();
 
     }
 
-    fadePictureAdrian() {
-        this.game.add.tween(this.adrian).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);        
+    fadePicturegameOver() {
+
+        this.game.add.tween(this.gameOver).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);        
     }
 
     render() {
