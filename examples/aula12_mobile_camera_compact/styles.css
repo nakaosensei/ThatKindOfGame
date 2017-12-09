@@ -1,0 +1,11 @@
+
+body { 
+    background-color: #555555
+}
+
+div.center {
+    display: table;
+    margin: 10px auto;
+    width: 80%;
+    /*cursor: none;*/ /*esconde mouse*/
+}
