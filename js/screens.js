@@ -11,9 +11,9 @@ class Fase1 extends GameState {
         this.game.load.audio('blueFlameSound', ['assets/audio/blueBlast.wav']);
         this.game.load.audio('crow', ['assets/audio/crow.wav']);
         this.game.load.spritesheet('life','assets/lightHalf.png',298,74);
-        this.game.load.spritesheet('phoenix','assets/phoenix1.5.png',144,144);
+        this.game.load.spritesheet('phoenix','assets/enemy1.png',144,144);
         this.game.load.spritesheet('story','assets/story1.png',186,533);
-        this.game.load.spritesheet('owl','assets/mysticCrow075.png',193,150);
+        this.game.load.spritesheet('owl','assets/enemy3.png',114,144);
         this.game.load.audio('tamb', ['assets/audio/drum.wav']);   
     }
 
@@ -25,12 +25,12 @@ class Fase1 extends GameState {
         this.gameSound = this.game.add.audio('fable');
         this.gameSound.play();
         this.crowSound = this.game.add.audio('crow');
-        this.game.camera.speedX = 2;
+        this.game.camera.speedX = 1;
 		this.gameStart=0
-        
+        this.characterCtrl = new PersonagemController();
         this.gameSound.loopFull(2.5);        
         let background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'background')
-        background.autoScroll(-30, 0);
+        background.autoScroll(-10, 0);
         background.fixedToCamera = true;
 
         this.touch = this.game.add.audio('tamb');
@@ -90,49 +90,46 @@ class Fase1 extends GameState {
     }
 
     doFireButtonAction(){
-        this.blueBlast = new Blueball(this.game, this.player1.x, this.player1.y-81, 'darkball',[0,1,2,3,4,5,6],5,this.enemy1,this.enemy2,this.enemy3)
+        this.blueBlast = new Blueball(this.game, this.player1.x, this.player1.y-81, 'darkball',[0,1,2,3,4,5,6],5,this.characterCtrl)
         this.game.add.existing(this.blueBlast);
         var soundEff = this.game.add.audio('blueFlameSound');
         soundEff.play();
     }
 
     createMap() {
-        let mapData = [ "                                            XXXXX         XXXXXXXXXXXXXXXXXXXX                   XXXXXXX                                                                    XXXXX         XXXXXXXXXXXXXXXXXXXX                   XXXXXXX                                                                    XXXXX         XXXXXXXXXXXXXXXXXXXX                                                  ",
+        let mapData = [ "                                            XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                   XXXXXXX                                                                    XXXXX         XXXXXXXXXXXXXXXXXXXX                   XXXXXXX                                                                    XXXXX         XXXXXXXXXXXXXXXXXXXX                                                  ",
                         "                                                                                                                                                                                                                                                                                                                                                                                                ",
                         "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                "]
+                        "                                                                                                                          Y                              Y                                                                                                                                              Y                                                     Y                                 ",
+                        "                      Z                         Y                          Z                        Y                                                                                           Y                                                                                                                                                                                               ",
+                        "                                                                                                                                                                                                                           Y                               Y                                                                   Y                                                                ",
+                        "                                                                                                                                           Z                                                                         Y                                                                Y                                                                                                   Y     ",
+                        "                                                                                                                                                                             Z                                                                                      Z                                           Y                                                                               ",
+                        "                                                                                                                             Y                                                                                                                       Y                                                                                                                                          ",
+                        "                                                                                                                                                            Y                                                                                                                     Y                                                                                             Y               ",
+                        "                                                                        Y                                                                                                                                                                                                                                                             Y                                                         ",
+                        "                                                                                                                                                                                                                                                                                                   Z                                                                                            ",
+                        "                                                                                                                                                                                           Y                         Y                                                                                                                                                                          ",
+                        "                                         Z                                                                                                      Y                          Y                                                                                                        Y                                                                                         Y                 ",
+                        "                                                                                                 Y                                                                                                                                                                 Y                                                                                                                            ",
+                        "                                                             Y                                                                    Y                                                                                                                                                                        Y                                                                                    ",
+                        "                                                                                                                                                                                                   Y                        Y                                                                                                      Z                                                            ",
+                        "                                                                                                                                                                                                                                                      Y                                Y                                                                                                        ",
+                        "                                                                                                                                                                                                                                                                                                                                                        Y                                 Y     "]
                         
         this.map = this.game.add.group()
         for (let row = 0; row < mapData.length; row++) {
             for (let col = 0; col < mapData[0].length; col++) {
                 if (mapData[row][col] == 'X') {
                 	var spike = new Spike(this.game, col*32,row*32+20,this.player1);
-                	/*
-                    let block = this.map.create(col*32, row*32, 'spike')
-                    block.scale.setTo(0.5, 0.5)
-                    this.game.physics.arcade.enable(block, Phaser.Physics.ARCADE)
-                    block.body.immovable = true
-                    block.tag = 'spike'
-                    block.autoCull = true
-                    block.scale.setTo(1.3, 1.3)
-                    block.inputEnabled = true
-                    block.input.enableDrag(true, false)*/
-
+                }
+                if (mapData[row][col] == 'Y') {
+                	var phoenix = new Phoenix(this.game, col*32,row*32,this.player1);
+                	this.characterCtrl.add(phoenix);                	
+                }
+                if (mapData[row][col] == 'Z') {
+                	var owl = new Owl(this.game, col*32,row*32,this.player1);
+                	this.characterCtrl.add(owl);                	
                 }
             }
         }

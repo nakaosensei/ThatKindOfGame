@@ -7,8 +7,10 @@ class Phoenix extends Phaser.Sprite {
         this.speed = 5 //velocidade de troca dos sprites
         this.animations.add('default',this.vetorDefault,this.speed,true);  
         this.animations.play('default');
+        this.typeEnemy="MOB"
         this.player = player;      
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
+        this.game.add.existing(this);
         //this.body.moveTo(10000,2000,Phaser.ANGLE_LEFT);     
     }
 
@@ -26,13 +28,15 @@ class Owl extends Phaser.Sprite {
     constructor(game, x, y,player) {
         super(game, x, y, 'owl')   
         this.anchor.setTo(0.5, 0.5)
+        this.typeEnemy="MOB"
         this.vetorDefault = [0,1,2,3]
         this.speed = 5 //velocidade de troca dos sprites
         this.animations.add('default',this.vetorDefault,this.speed,true);  
         this.animations.play('default');
         this.player = player;      
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
-        this.body.moveTo(10000,2000,Phaser.ANGLE_LEFT);     
+        this.game.add.existing(this);
+        //this.body.moveTo(10000,2000,Phaser.ANGLE_LEFT);     
     }
 
     update() {
