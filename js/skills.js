@@ -29,10 +29,11 @@ class Darkball extends Phaser.Sprite {
 }
 
 class Blueball extends Phaser.Sprite {
-    constructor(game, x, y, asset,vetorDefault,speed,characterCtrl) {
+    constructor(game, x, y, asset,vetorDefault,speed,characterCtrl,player,munitionText) {        
         super(game, x, y, asset)   
         this.anchor.setTo(0.5, 0.5)
         this.inputEnabled = true
+
         //this.input.enableDrag(false, true)        
         this.vetorDefault = vetorDefault;
         this.game=game;
@@ -46,6 +47,11 @@ class Blueball extends Phaser.Sprite {
         this.anchor.setTo(0, 0);
         this.game.physics.arcade.enable(this);
         this.body.moveTo(this.moveSpeed,this.moveRange,Phaser.ANGLE_RIGHT);
+        this.player = player
+        this.munitionText=munitionText        
+        this.player.municao-=1;
+        this.munitionText.text = ''+this.player.municao;        
+        this.munitionText = munitionText        
     }
 
     update() {        

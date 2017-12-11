@@ -57,7 +57,7 @@ class Menu extends GameState {
     }
 
     begin(){
-        this.state.start('Play')
+        this.state.start('Fase1')
         this.gameSound.stop();        
         this.touch.play();
 

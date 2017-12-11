@@ -1,6 +1,6 @@
 
 class Player extends Phaser.Sprite {
-    constructor(game, x, y, asset, vetorDefault,speed) {
+    constructor(game, x, y, asset, vetorDefault,speed,munitionText) {
         super(game, x, y, asset)   
         this.anchor.setTo(0.5, 0.5)        
         //this.inputEnabled = true
@@ -14,6 +14,7 @@ class Player extends Phaser.Sprite {
         this.hit = 0;
         this.game=game;
         this.lastActionTime=0;
+        this.munitionText=munitionText;
         this.lifeSprite=this.game.add.sprite(10,10,'life');
         this.lifeSprite.animations.add("4Life",[0],1,true);
         this.lifeSprite.animations.add("3Life",[1],1,true);
@@ -21,7 +22,9 @@ class Player extends Phaser.Sprite {
         this.lifeSprite.animations.add("1Life",[3],1,true);
         this.lifeSprite.animations.play("4Life");
         this.lifeSprite.fixedToCamera = true;
-        this.crowSound = this.game.add.audio('crow');        
+        this.municao=5;
+        this.crowSound = this.game.add.audio('crow');
+        this.body.setSize(50,40,60,80)        
     }
 
     update() {
@@ -39,15 +42,41 @@ class Player extends Phaser.Sprite {
         }
     }
 
+    gainLife(source,victim){
+        if(source!=null){
+            source.destroy();
+        }
+        if(victim.lifeTotal<=0||victim.lifeTotal>=4){
+           return 0;
+        }
+        victim.lifeTotal+=1;
+        if(victim.lifeTotal==4){
+           victim.lifeSprite.animations.play('4Life');
+        }else if(victim.lifeTotal==3){
+           victim.lifeSprite.animations.play('3Life');
+        }else if(victim.lifeTotal==2){
+          victim.lifeSprite.animations.play('2Life');
+        }else if(victim.lifeTotal==1){
+           victim.lifeSprite.animations.play('1Life');
+        }
+    }
+
+    addShot(source,victim){
+        if(source!=null){
+            source.destroy();
+        }
+        victim.municao+=1;            
+        victim.munitionText.text=''+victim.municao;
+    }
     takeHit(source,victim){        
         if(victim.hit==0){
             victim.lastActionTime = victim.game.time.now;                        
             console.log(victim.lastActionTime)        
-        }else{               
-           if(victim.game.time.now - victim.lastActionTime > 1000){
-              if(source!=null&&source.typeEnemy=="MOB"){
+        }else{
+           if(source!=null&&source.typeEnemy=="MOB"){
                   source.destroy();
-              }
+           }               
+           if(victim.game.time.now - victim.lastActionTime > 1000){
               victim.crowSound.play();
               victim.lifeTotal = victim.lifeTotal-1;
               victim.hit=0;
