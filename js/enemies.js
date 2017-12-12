@@ -14,6 +14,7 @@ class Demon extends Phaser.Sprite {
         this.body.setSize(100,100,0,10)
         this.animations.add('default',this.vetorDefault,this.speed,true);  
         this.animations.play('default');
+        
         //if(this.animations!=null){
             //this.animations.add('default',this.vetorDefault,this.speed,true);  
             //this.animations.play('default'); 
@@ -47,6 +48,12 @@ class Demon extends Phaser.Sprite {
         this.player.hit=1;
     }
     destroyItself(skill,victim){
+        var i = 0;
+        for(i=0;i<skill.characterCtrl.personagens.length;i++){
+            if(skill.characterCtrl.personagens[i]==victim){
+                skill.characterCtrl.personagens[i]=null                      
+            }                            
+        }
         victim.destroy();
         skill.destroy();
     }    
@@ -88,9 +95,15 @@ class Heartless extends Phaser.Sprite {
         this.player.hit=1;
     }
     destroyItself(skill,victim){
+        var i = 0;
+        for(i=0;i<skill.characterCtrl.personagens.length;i++){
+            if(skill.characterCtrl.personagens[i]==victim){
+                skill.characterCtrl.personagens[i]=null                      
+            }                            
+        }
         victim.destroy();
         skill.destroy();
-    }    
+    }
 }
 
 class ShadowDemon extends Phaser.Sprite {
@@ -125,8 +138,9 @@ class ShadowDemon extends Phaser.Sprite {
             this.y+=1;
         }
     }
-    destroyItself(skill,victim){       
-        victim.destroy();        
+    destroyItself(skill,victim){
+        
+        victim.destroy();
         skill.destroy();
     }    
 }
@@ -228,7 +242,7 @@ class FireBlast extends Phaser.Sprite {
     destroyItself(skill,victim){
         victim.destroy();
         skill.destroy();
-    }    
+    }
 }
 class DarkFireBlast extends Phaser.Sprite {
     constructor(game, x, y,player) {

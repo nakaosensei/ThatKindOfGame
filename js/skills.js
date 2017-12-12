@@ -39,14 +39,12 @@ class Blueball extends Phaser.Sprite {
         this.game=game;
         this.speed = speed //velocidade de troca dos sprites
         this.animations.add('default',this.vetorDefault,this.speed,true);  
-        this.animations.play('default');
-        this.moveSpeed = 40000;
-        this.moveRange=20000;
+        this.animations.play('default');        
         this.characterCtrl=characterCtrl;
         this.creationTime = this.game.time.now;
         this.anchor.setTo(0, 0);
         this.game.physics.arcade.enable(this);
-        this.body.moveTo(this.moveSpeed,this.moveRange,Phaser.ANGLE_RIGHT);
+        
         this.player = player
         this.munitionText=munitionText        
         this.player.municao-=1;
@@ -61,9 +59,10 @@ class Blueball extends Phaser.Sprite {
         var i = 0;        
         for(i=0;i<this.characterCtrl.personagens.length;i++){
             if(this.characterCtrl.personagens[i]!=null&&this.game!=null){
-                this.game.physics.arcade.collide(this, this.characterCtrl.personagens[i],this.characterCtrl.personagens[i].destroyItself);    
+                this.game.physics.arcade.collide(this, this.characterCtrl.personagens[i],this.characterCtrl.personagens[i].destroyItself);                  
             }                            
-        }            
+        }
+        this.x+=6;            
         if(this.game!=null&&this.game.time.now-this.creationTime>3000){
             this.destroy();
         }        

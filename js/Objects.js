@@ -47,7 +47,7 @@ class DarkHole extends Phaser.Sprite {
         this.player = player;
         this.typeEnemy="OBJ";        
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
-        this.animations.add('default',[0,1,2,3],this.speed,true);  
+        this.animations.add('default',[0,1,2,3],10,true);  
         this.animations.play('default');
         this.game.add.existing(this);
         this.body.immovable = true;

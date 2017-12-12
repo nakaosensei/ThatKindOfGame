@@ -78,8 +78,8 @@ class Player extends Phaser.Sprite {
             victim.lastActionTime = victim.game.time.now;                        
             console.log(victim.lastActionTime)        
         }else{
-           if(source!=null&&source.typeEnemy=="MOB"){                  
-                  source.destroy();
+           if(source!=null&&source.typeEnemy=="MOB"){                          
+              source.destroy();
            }                          
            if(victim.game.time.now - victim.lastActionTime > 1000){
               victim.crowSound.play();
