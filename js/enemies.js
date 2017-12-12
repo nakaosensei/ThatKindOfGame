@@ -27,7 +27,7 @@ class Demon extends Phaser.Sprite {
         if(this.game==null){
             return 0;
         }        
-        if(this.game.time.now-this.creationTime>4000){
+        if(this.game.time.now-this.creationTime>3000){
             this.fireBlast = new DarkFireBlast(this.game,this.x,this.y,this.player);
             this.creationTime=this.game.time.now
             this.skillCtrl.add(this.fireBlast)

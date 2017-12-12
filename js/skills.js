@@ -40,7 +40,7 @@ class Blueball extends Phaser.Sprite {
         this.speed = speed //velocidade de troca dos sprites
         this.animations.add('default',this.vetorDefault,this.speed,true);  
         this.animations.play('default');
-        this.moveSpeed = 24000;
+        this.moveSpeed = 40000;
         this.moveRange=20000;
         this.characterCtrl=characterCtrl;
         this.creationTime = this.game.time.now;
