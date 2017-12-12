@@ -52,13 +52,13 @@ class Blueball extends Phaser.Sprite {
         this.player.municao-=1;
         this.munitionText.text = ''+this.player.municao;        
         this.munitionText = munitionText        
+        this.soundEff = this.game.add.audio('blueFlameSound');
+        this.soundEff.play();
+        this.game.add.existing(this)        
     }
 
     update() {        
         var i = 0;        
-        if(this==null || this.game==null){
-            return 0;
-        }
         for(i=0;i<this.characterCtrl.personagens.length;i++){
             if(this.characterCtrl.personagens[i]!=null&&this.game!=null){
                 this.game.physics.arcade.collide(this, this.characterCtrl.personagens[i],this.characterCtrl.personagens[i].destroyItself);    

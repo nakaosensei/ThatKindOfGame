@@ -11,9 +11,11 @@ class Game extends Phaser.Game {
         // adiciona estados ao jogo
         this.state.add('Menu', Menu, false)
         this.state.add('Fase1', Fase1, false)
+        this.state.add('Fase2', Fase2, false)
+        this.state.add('Fase3', Fase3, false)
         this.state.add('GameOver',GameOver,false)
         //this.state.add('Title', TitleState, false)
-        this.state.start('Fase1')
+        this.state.start('Fase2')
         GAME = this
     }
 
@@ -25,6 +27,7 @@ class Game extends Phaser.Game {
 // CLASSE GENERICA DE TELAS //////////////////////////////////////////////////////
 
 class GameState extends Phaser.State {
+
     initFullScreenButtons() {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         

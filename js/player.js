@@ -1,6 +1,6 @@
 
 class Player extends Phaser.Sprite {
-    constructor(game, x, y, asset, vetorDefault,speed,munitionText) {
+    constructor(game, x, y, asset, vetorDefault,speed,munitionText,characterCtrl) {
         super(game, x, y, asset)   
         this.anchor.setTo(0.5, 0.5)        
         //this.inputEnabled = true
@@ -23,7 +23,10 @@ class Player extends Phaser.Sprite {
         this.lifeSprite.animations.play("4Life");
         this.lifeSprite.fixedToCamera = true;
         this.municao=5;
+        this.characterCtrl=characterCtrl
         this.crowSound = this.game.add.audio('crow');
+        this.collectShot = this.game.add.audio('collectShot');
+        this.collectLife = this.game.add.audio('collectLife');
         this.body.setSize(50,40,60,80)        
     }
 
@@ -50,6 +53,7 @@ class Player extends Phaser.Sprite {
            return 0;
         }
         victim.lifeTotal+=1;
+        victim.collectLife.play();
         if(victim.lifeTotal==4){
            victim.lifeSprite.animations.play('4Life');
         }else if(victim.lifeTotal==3){
@@ -65,6 +69,7 @@ class Player extends Phaser.Sprite {
         if(source!=null){
             source.destroy();
         }
+        victim.collectShot.play();
         victim.municao+=1;            
         victim.munitionText.text=''+victim.municao;
     }
@@ -73,9 +78,9 @@ class Player extends Phaser.Sprite {
             victim.lastActionTime = victim.game.time.now;                        
             console.log(victim.lastActionTime)        
         }else{
-           if(source!=null&&source.typeEnemy=="MOB"){
+           if(source!=null&&source.typeEnemy=="MOB"){                  
                   source.destroy();
-           }               
+           }                          
            if(victim.game.time.now - victim.lastActionTime > 1000){
               victim.crowSound.play();
               victim.lifeTotal = victim.lifeTotal-1;
