@@ -184,7 +184,7 @@ class Fase2 extends GameState {
                     //this.characterCtrl.add(owl);                    
                 }
                 if (mapData[row][col] == 'R') {
-                    var owl = new Portal2(this.game, col*32,row*32,this.player1,'Fase2',this.gameSound);
+                    var owl = new Portal2(this.game, col*32,row*32,this.player1,'GameOver',this.gameSound);
                     //this.characterCtrl.add(owl);                    
                 }
             }

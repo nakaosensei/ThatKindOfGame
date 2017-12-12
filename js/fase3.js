@@ -8,7 +8,7 @@ class Fase3 extends GameState {
         this.game.load.spritesheet('player','assets/crow075.png',187,187);
         this.game.load.spritesheet('darkball','assets/darkball1.5.png',144,144);
         this.game.load.image('buttonFire','assets/FireButton190.png',90,90);
-        this.game.load.audio('fable', ['assets/audio/fragmentsSorrow.mp3']);        
+        this.game.load.audio('fable', ['assets/audio/Aqua.mp3']);        
         this.game.load.audio('blueFlameSound', ['assets/audio/blueBlast.wav']);
         this.game.load.audio('collectShot', ['assets/audio/collectShot.wav']);        
         this.game.load.audio('collectLife', ['assets/audio/collectLife.wav']);
@@ -48,7 +48,7 @@ class Fase3 extends GameState {
 
         
         this.touch = this.game.add.audio('tamb');
-        this.munitionQtde = this.game.add.text(this.game.width-50, this.game.height-50, '5', { fontSize: '32px', fill: '#000' });
+        this.munitionQtde = this.game.add.text(this.game.width-50, this.game.height-50, '5', { fontSize: '32px', fill: '#fff' });
         this.munitionQtde.fixedToCamera = true
 
 
@@ -118,7 +118,7 @@ class Fase3 extends GameState {
     }
 
     createMap() {
-        let mapData = [ "               T                    T     XXXXXXXXXX     T                    T     XXXXXXXXXX     T         D          T     XXXXXXXXXX     T         D          T     XXXXXXXXXX     T          T         T     XXXXXXXXXX     T                    T     XXXXXXXXXX     T                    T     XXXXXXXXXX     T                   T     XXXXXXXXXX     T     XXXXXXXXXX     T            ",
+        let mapData = [ "               T                    T     XXXXXXXXXX     T                    T     XXXXXXXXXX     T         D          T     XXXXXXXXXX     T         D          T     XXXXXXXXXX     T          T         T     XXXXXXXXXX     T                    T     XXXXXXXXXX     T                    T     XXXXXXXXXX     T                   T                    T     XXXXXXXXXX     T            ",
                         "                          Y                                         S                                                                                                                                                                                                                                                                                                                           ",
                         "                                                                           M   D      S                                                                R                                                                                  Y               D                                                                    Y                                                                ",
                         "                                     D                                                                                  D                                                                                                                                                                                                                                                                       ",
@@ -167,19 +167,19 @@ class Fase3 extends GameState {
                 }
                 if (mapData[row][col] == 'L') {
                     var owl = new Life(this.game, col*32,row*32,this.player1);
-                    this.characterCtrl.add(owl);                    
+                    //this.characterCtrl.add(owl);                    
                 }
                 if (mapData[row][col] == 'M') {
                     var owl = new MunitionBlue(this.game, col*32,row*32,this.player1);
-                    this.characterCtrl.add(owl);                    
+                    //this.characterCtrl.add(owl);                    
                 }
                 if (mapData[row][col] == 'F') {
-                    var owl = new Portal(this.game, col*32,row*32,this.player1,'Menu',this.gameSound);
-                    this.characterCtrl.add(owl);                    
+                    var owl = new Portal(this.game, col*32,row*32,this.player1,'Boss',this.gameSound);
+                   // this.characterCtrl.add(owl);                    
                 }
                 if (mapData[row][col] == 'R') {
                     var owl = new Portal2(this.game, col*32,row*32,this.player1,'GameOver',this.gameSound);
-                    this.characterCtrl.add(owl);                    
+                    //this.characterCtrl.add(owl);                    
                 }
             }
         }

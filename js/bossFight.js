@@ -1,12 +1,14 @@
 
-class Fase3 extends GameState {
+class BossFight extends GameState {
     preload() {        
-        this.game.load.image('background', 'assets/stage3.jpg');
+        this.game.load.image('background', 'assets/bossStage.jpg');
         this.game.load.image('spike', 'assets/spike.png');
         this.game.load.image('spike2', 'assets/spike2.png');
         this.game.load.image('fullscreen-button', 'assets/fullscreen-button.png');
         this.game.load.spritesheet('player','assets/crow075.png',187,187);
+        this.game.load.spritesheet('boss','assets/crowSpiritEnemy.png',187,187);
         this.game.load.spritesheet('darkball','assets/darkball1.5.png',144,144);
+        this.game.load.spritesheet('darkballReverse','assets/darkballReverse.png',144,144);
         this.game.load.image('buttonFire','assets/FireButton190.png',90,90);
         this.game.load.audio('fable', ['assets/audio/fragmentsSorrow.mp3']);        
         this.game.load.audio('blueFlameSound', ['assets/audio/blueBlast.wav']);
@@ -15,13 +17,14 @@ class Fase3 extends GameState {
         this.game.load.audio('crow', ['assets/audio/crow.wav']);
         this.game.load.spritesheet('meteor','assets/fire.png',192,192);
         this.game.load.spritesheet('demon','assets/enemy4.png',118,140);
+        this.game.load.spritesheet('gargol','assets/enemy7.png',124,140);
         this.game.load.spritesheet('shadow','assets/enemy5.png',100,140);
         this.game.load.spritesheet('heartless','assets/enemy6.png',141.5,140);        
         this.game.load.spritesheet('life','assets/lightHalf.png',298,74);        
         this.game.load.spritesheet('fireBlast','assets/enemyAtk1.png',100,50);
         this.game.load.spritesheet('portal','assets/portal.png',94,200);
         this.game.load.spritesheet('darkHole','assets/darkhole.png',109,110);
-        this.game.load.spritesheet('story','assets/story1.png',186,533);
+        this.game.load.image('story','assets/story5.png');
         this.game.load.image('lifeSingle','assets/lifeSingle.png');
         this.game.load.image('munition','assets/munition.png');
         
@@ -48,7 +51,7 @@ class Fase3 extends GameState {
 
         
         this.touch = this.game.add.audio('tamb');
-        this.munitionQtde = this.game.add.text(this.game.width-50, this.game.height-50, '5', { fontSize: '32px', fill: '#000' });
+        this.munitionQtde = this.game.add.text(this.game.width-50, this.game.height-50, '5', { fontSize: '32px', fill: '#fff' });
         this.munitionQtde.fixedToCamera = true
 
 
@@ -118,25 +121,25 @@ class Fase3 extends GameState {
     }
 
     createMap() {
-        let mapData = [ "XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXXXXXX     T     XXXXXX",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "                                                                                                                                                                                                                                                                                                                                                                                                ",
-                        "          KKKKKKKKKKK          KKKKKKKKKKK     S     KKKKKKKKKKK          KKKKKKKKKKK     D    KKKKKKKKKKK          KKKKKKKKKKK          KKKKKKKKKKK          KKKKKKKKKKK           KKKKKKKKKKK          KKKKKKKKKKK          KKKKKKKKKKK          KKKKKKKKKKK          KKKKKKKKKKK          KKKKKKKKKKK          KKKKKKKKKKK     D     KKKKKKKKKKK     D     KKKKKKKKKKK          KKKKKKKKKKK  "]
+        let mapData = [ "               T                    T                  T                    T                T                   T                T                   T                T          T         T                  T                    T                T                    T                    T                   T                       T                    T                            ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                             ",
+                        "                              B                                                    Y                                                                                                                                                                                                                                                                                                         ",
+                        "                                                                                                                                                                                                                                                                                                                                                                                             ",
+                        "                          M                                                                              R                                                                                                                Y                                                                                                                                                  Z               ",
+                        "                                                         M           L                                                                                                 L    L                           M                                    Y       L                           D                        L Y                                                                                ",
+                        "                                                                                                                              M            L   L                Y                 D                                                                                                                                                 Y      L                                                 ",
+                        "                                                                                                    L                                                                                                                                                             L                                                                                                                          ",
+                        "                                                                                                                                                                                                                  M                                                                   M                                                                                                      ",
+                        "                                                                                                                                                        M                                                                                                                                                                                                                                 F  ",
+                        "                                    M                D                      L                M                                                                                                                                                                M          M                                                                    L                                              ",
+                        "                                                                                                         L       M                                                   M     L        R         L     L           M                           L                                                      L      L            M   M  M                                                              ",
+                        "                                                                                                                                                                                                                                                                                                                                                                   Y                         ",
+                        "                                                                                                                                       M   Y                                                                                                                                                                                                                                                 ",
+                        "                         M                                       M                                                                                                                                       M                                                             Y                                                                                                                     ",
+                        "                                                                                                         R                                 L                                                                                                                                                                                          Z                                                      ",
+                        "                                                                                                                                                                                  D                                                                                                                                                                                              D           ",
+                        "                                                                                                                                                                                                                          D                                                                                                                                                                  ",
+                        "                                           KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK                                                                  KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK                                           KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK                      "]
                         
         this.map = this.game.add.group()
         for (let row = 0; row < mapData.length; row++) {
@@ -157,6 +160,10 @@ class Fase3 extends GameState {
                     var phoenix = new Demon(this.game, col*32,row*32,this.player1,this.skillCtrl);
                     this.characterCtrl.add(phoenix);                    
                 }
+                if (mapData[row][col] == 'B') {
+                    this.boss = new Boss(this.game, col*32,row*32,this.player1,this.skillCtrl,this.characterCtrl);
+                    this.characterCtrl.add(phoenix);                    
+                }
                 if (mapData[row][col] == 'Y') {
                     var owl = new Heartless(this.game, col*32,row*32,this.player1);
                     this.characterCtrl.add(owl);                    
@@ -167,19 +174,19 @@ class Fase3 extends GameState {
                 }
                 if (mapData[row][col] == 'L') {
                     var owl = new Life(this.game, col*32,row*32,this.player1);
-                    this.characterCtrl.add(owl);                    
+                    //this.characterCtrl.add(owl);                    
                 }
                 if (mapData[row][col] == 'M') {
                     var owl = new MunitionBlue(this.game, col*32,row*32,this.player1);
-                    this.characterCtrl.add(owl);                    
+                    //this.characterCtrl.add(owl);                    
                 }
                 if (mapData[row][col] == 'F') {
-                    var owl = new Portal(this.game, col*32,row*32,this.player1,'Menu',this.gameSound);
-                    this.characterCtrl.add(owl);                    
+                    var owl = new Portal(this.game, col*32,row*32,this.player1,'CG',this.gameSound);
+                    //this.characterCtrl.add(owl);                    
                 }
                 if (mapData[row][col] == 'R') {
                     var owl = new Portal2(this.game, col*32,row*32,this.player1,'GameOver',this.gameSound);
-                    this.characterCtrl.add(owl);                    
+                    //this.characterCtrl.add(owl);                    
                 }
             }
         }
@@ -198,6 +205,7 @@ class Fase3 extends GameState {
             //    this.game.camera.speedX *= -1
             }else{
                this.player1.x+= this.game.camera.speedX    
+               this.boss.x+=this.game.camera.speedX 
             }
         }        
     }

@@ -169,18 +169,18 @@ class Fase1 extends GameState {
                 }
                 if (mapData[row][col] == 'L') {
                 	var owl = new Life(this.game, col*32,row*32,this.player1);
-                	this.characterCtrl.add(owl);                	
+                	//this.characterCtrl.add(owl);                	
                 }
                 if (mapData[row][col] == 'M') {
                 	var owl = new MunitionBlue(this.game, col*32,row*32,this.player1);
-                	this.characterCtrl.add(owl);                	
+                	//this.characterCtrl.add(owl);                	
                 }
                 if (mapData[row][col] == 'F') {
                     var owl = new Portal(this.game, col*32,row*32,this.player1,'Fase2',this.gameSound);
-                    this.characterCtrl.add(owl);                    
+                    //this.characterCtrl.add(owl);                    
                 }
                 if (mapData[row][col] == 'R') {
-                    var owl = new Portal2(this.game, col*32,row*32,this.player1,'Menu',this.gameSound);
+                    var owl = new Portal2(this.game, col*32,row*32,this.player1,'GameOver',this.gameSound);
                     this.characterCtrl.add(owl);                    
                 }
             }

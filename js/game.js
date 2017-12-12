@@ -13,9 +13,11 @@ class Game extends Phaser.Game {
         this.state.add('Fase1', Fase1, false)
         this.state.add('Fase2', Fase2, false)
         this.state.add('Fase3', Fase3, false)
+        this.state.add('Boss', BossFight, false)
+        this.state.add('CG', CG1, false)
         this.state.add('GameOver',GameOver,false)
         //this.state.add('Title', TitleState, false)
-        this.state.start('Fase3')
+        this.state.start('Menu')
         GAME = this
     }
 
