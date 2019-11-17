@@ -54,10 +54,11 @@ class Player extends Phaser.Sprite {
 
 
   moveWithGyroscope() {
+    this.body.bounce.set(0.8)
     gyro.frequency = 10;
     gyro.startTracking(function (o){
-      this.body.velocity.x += o.gamma/20;
-      this.body.velocity.y += o.beta/20;
+      this.x += o.gamma/20;
+      this.y += o.beta/20;
     })
   }
 
