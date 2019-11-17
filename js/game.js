@@ -7,7 +7,7 @@ class Game extends Phaser.Game {
   constructor() {
     // Game(width, height, renderer, parent, state, transparent, antialias, physicsConfig)
     super(1024, 600, Phaser.CANVAS, 'game-container', null, false, false)
-
+    
     // adiciona estados ao jogo
     this.state.add('Menu', Menu, false)
     this.state.add('Fase1', Fase1, false)

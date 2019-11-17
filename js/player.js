@@ -35,7 +35,8 @@ class Player extends Phaser.Sprite {
 
   update() {
     this.moveWithPointer()
-    this.moveWithArrows()    
+    this.moveWithArrows() 
+     
   }
 
   moveWithArrows() {
@@ -55,8 +56,8 @@ class Player extends Phaser.Sprite {
   moveWithGyroscope() {
     gyro.frequency = 10;
     gyro.startTracking(function (o){
-      this.x += o.gamma/20;
-      this.y += o.beta/20;
+      this.body.velocity.x += o.gamma/20;
+      this.body.velocity.y += o.beta/20;
     })
   }
 

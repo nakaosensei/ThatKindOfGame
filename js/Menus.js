@@ -20,7 +20,7 @@ class Menu extends GameState {
 
     let background = this.game.add.tileSprite(0, 0, this.game.width, this.game
         .height, 'background')
-      //background.autoScroll(-30, 0)
+  
     this.adrian = this.game.add.sprite(this.game.width - this.game.width / 2,
       this.game.height - this.game.height / 2, 'adrian');
     this.adrian.anchor.setTo(0.5, 0.5);
