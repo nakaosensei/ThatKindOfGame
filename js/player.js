@@ -30,7 +30,7 @@ class Player extends Phaser.Sprite {
     this.body.setSize(50, 40, 60, 80)
     this.defaultXSpeed = 5; //Velocidade de movimento com teclado em x
     this.defaultYSpeed = 5; //Velocidade de movimento com teclado em y
-    this.moveWithGyroscope()
+    
   }
 
   update() {    

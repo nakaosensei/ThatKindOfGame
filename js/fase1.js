@@ -57,7 +57,12 @@ class Fase1 extends GameState {
 
         // players
         this.player1 = new Player(this.game, this.game.width*1/5, this.game.height/2, 'player',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],10,this.munitionQtde)
-   
+
+
+        //this.player1.fixedToCamera = true;
+        this.game.add.existing(this.player1);        
+        game.physics.enable(player1, Phaser.Physics.ARCADE);   
+        
         
 
         let fireButton = this.input.keyboard.addKey(Phaser.Keyboard.TWO);
