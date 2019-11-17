@@ -30,11 +30,12 @@ class Player extends Phaser.Sprite {
     this.body.setSize(50, 40, 60, 80)
     this.defaultXSpeed = 5; //Velocidade de movimento com teclado em x
     this.defaultYSpeed = 5; //Velocidade de movimento com teclado em y
+    this.moveWithGyroscope()
   }
 
   update() {
     this.moveWithPointer()
-    this.moveWithArrows()
+    this.moveWithArrows()    
   }
 
   moveWithArrows() {
@@ -48,6 +49,15 @@ class Player extends Phaser.Sprite {
     } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
       this.y += this.defaultYSpeed;
     }
+  }
+
+
+  moveWithGyroscope() {
+    gyro.frequency = 10;
+    gyro.startTracking(function (o){
+      this.x += o.gamma/20;
+      this.y += o.beta/20;
+    })
   }
 
   moveWithPointer() {
