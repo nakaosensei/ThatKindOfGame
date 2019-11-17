@@ -30,10 +30,11 @@ class Player extends Phaser.Sprite {
     this.body.setSize(50, 40, 60, 80)
     this.defaultXSpeed = 5; //Velocidade de movimento com teclado em x
     this.defaultYSpeed = 5; //Velocidade de movimento com teclado em y
-    this.moveWithGyroscope(game)
+    
   }
 
   update() {
+    this.moveWithGyroscope()
     this.moveWithPointer()
     this.moveWithArrows() 
      
@@ -53,8 +54,7 @@ class Player extends Phaser.Sprite {
   }
 
 
-  moveWithGyroscope(game) {
-    game.physics.enable(this,Phaser.physics.ARCADE)
+  moveWithGyroscope() {    
     this.body.bounce.set(0.8)
     gyro.frequency = 10;
     gyro.startTracking(function (o){
