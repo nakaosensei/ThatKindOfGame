@@ -61,8 +61,8 @@ class Fase1 extends GameState {
         this.game.add.existing(this.player1);        
                    
         gyro.startTracking(function(o) {
-            this.player1.x += o.gamma/20;
-            this.player1.y += o.beta/20;
+            this.player1.body.velocity.x += o.gamma/20;
+            this.player1.body.velocity.y += o.beta/20;
         });		
         
 
