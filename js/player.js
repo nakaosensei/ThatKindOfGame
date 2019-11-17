@@ -34,7 +34,7 @@ class Player extends Phaser.Sprite {
   }
 
   update() {
-    this.moveWithGyroscope()
+    
     this.moveWithPointer()
     this.moveWithArrows() 
      

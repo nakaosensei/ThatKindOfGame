@@ -57,10 +57,20 @@ class Fase1 extends GameState {
 
         // players
         this.player1 = new Player(this.game, this.game.width*1/5, this.game.height/2, 'player',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],10,this.munitionQtde)
-        
+
 
         //this.player1.fixedToCamera = true;
         this.game.add.existing(this.player1);
+
+        this.game.physics.enable(this.player1, Phaser.Physics.ARCADE);
+        this.player1.body.collideWorldBounds = true;
+        this.player1.body.bounce.set(0.8);
+        gyro.frequency = 10;
+        gyro.startTracking(function(o) {
+            // updating player velocity
+            this.player1.body.velocity.x += o.gamma/20;
+            this.player1.body.velocity.y += o.beta/20;
+       });		
 
         let fireButton = this.input.keyboard.addKey(Phaser.Keyboard.TWO);
         fireButton.onDown.add(this.doFireButtonAction, this);
